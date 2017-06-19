@@ -3,32 +3,13 @@ module FSM where
 
 import Control.Monad (foldM)
 
-data State
-    = Asleep
-    | Awake
-    | Dressed
-    | Fed
-    | Ready
-    | Work
-    | Cafe
-    | Home
-    | Invalid
+data State = Asleep | Awake | Dressed | Fed | Ready | Work | Cafe | Home | Invalid
     deriving (Show, Eq)
 
-data Event
-    = Alarm
-    | Dress
-    | Eat
-    | GoToWork
-    | Think
-    | Yawn
-    | Coffee
-    | GoHome
-    | Read
-    | WatchTV
+data Event = Alarm | Dress | Eat | GoToWork | Think | Yawn | Coffee | GoHome | Read | WatchTV
     deriving (Show, Eq)
 
--- Transition table
+-- Transition function (aka. transition table)
 transition :: (State, Event) -> State
 transition (Asleep,  Alarm)    = Awake
 transition (Awake,   Dress)    = Dressed
@@ -44,17 +25,11 @@ transition (Home,    Read)     = Asleep
 transition (Home,    WatchTV)  = Asleep
 transition (_, _)              = Invalid
 
--- Lift the TT into Maybe
-lift :: (a -> State) -> (a -> Maybe State)
-lift f = \a -> case f a of
-    Invalid -> Nothing
-    x       -> Just x
+-- Decouple the machine from the transition function
+fsm :: ((State, Event) -> State) -> (State, Event) -> Maybe State
+fsm tt = \(s, e) -> case tt (s, e) of
+    Invalid  -> Nothing
+    newState -> Just newState
 
--- run [Alarm, Eat, Dress, GoToWork, Think, Think, Yawn, Coffee, Think, Yawn, Coffee, GoHome, Read]
-run :: [Event] -> Maybe State
-run = foldM (curry $ lift transition) Asleep
-
---run2 :: [Maybe Event] -> Maybe State
---run2 = foldl (liftA2 $ curry transition) (Just S0)
-
-
+runFrom :: State -> [Event] -> Maybe State
+runFrom state = foldM (curry $ fsm transition) state
