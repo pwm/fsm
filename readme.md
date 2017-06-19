@@ -10,4 +10,4 @@
 
 ## The machine
 
-![](fsm.svg)
+![](https://cdn.rawgit.com/pwm/fsm/master/fsm.svg)
