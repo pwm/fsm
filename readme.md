@@ -10,4 +10,4 @@
 
 ## The machine
 
-![](https://cdn.rawgit.com/pwm/fsm/master/fsm.svg)
+![](https://cdn.rawgit.com/pwm/fsm/master/diagram/fsm.svg)

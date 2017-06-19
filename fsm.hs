@@ -27,7 +27,7 @@ transition (_, _)              = Invalid
 
 -- Decouple the machine from the transition function
 fsm :: ((State, Event) -> State) -> (State, Event) -> Maybe State
-fsm tt = \(s, e) -> case tt (s, e) of
+fsm t = \(s, e) -> case t (s, e) of
     Invalid  -> Nothing
     newState -> Just newState
 
