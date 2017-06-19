@@ -1,0 +1,25 @@
+@startuml
+
+state Awake
+state Dressed
+state Fed
+state ReadyToGo
+state Work
+state Cafe
+state Home
+state Asleep
+
+Asleep -up-> Awake: Alarm
+Awake --> Dressed: Dress
+Awake --> Fed: Eat
+Dressed --> ReadyToGo: Eat
+Fed --> ReadyToGo: Dress
+ReadyToGo --> Work: GoToWork
+Work -> Work: Think
+Work -left-> Cafe: Yawn
+Cafe --> Work: DrinkCoffee
+Work --> Home: GoHome
+Home --> Asleep: Read
+Home --> Asleep: WatchTV
+
+@enduml
