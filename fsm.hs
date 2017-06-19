@@ -10,26 +10,28 @@ data Event = Alarm | Dress | Eat | GoToWork | Think | Yawn | Coffee | GoHome | R
     deriving (Show, Eq)
 
 -- Transition function (aka. transition table)
-transition :: (State, Event) -> State
-transition (Asleep,  Alarm)    = Awake
-transition (Awake,   Dress)    = Dressed
-transition (Awake,   Eat)      = Fed
-transition (Dressed, Eat)      = Ready
-transition (Fed,     Dress)    = Ready
-transition (Ready,   GoToWork) = Work
-transition (Work,    Think)    = Work
-transition (Work,    Yawn)     = Cafe
-transition (Cafe,    Coffee)   = Work
-transition (Work,    GoHome)   = Home
-transition (Home,    Read)     = Asleep
-transition (Home,    WatchTV)  = Asleep
-transition (_, _)              = Invalid
+myDay :: (State, Event) -> State
+myDay (Asleep,  Alarm)    = Awake
+myDay (Awake,   Dress)    = Dressed
+myDay (Awake,   Eat)      = Fed
+myDay (Dressed, Eat)      = Ready
+myDay (Fed,     Dress)    = Ready
+myDay (Ready,   GoToWork) = Work
+myDay (Work,    Think)    = Work
+myDay (Work,    Yawn)     = Cafe
+myDay (Cafe,    Coffee)   = Work
+myDay (Work,    GoHome)   = Home
+myDay (Home,    Read)     = Asleep
+myDay (Home,    WatchTV)  = Asleep
+myDay (_, _)              = Invalid
 
--- Decouple the machine from the transition function
+-- The machine decoupled from the specific transition function
 fsm :: ((State, Event) -> State) -> (State, Event) -> Maybe State
 fsm t = \(s, e) -> case t (s, e) of
     Invalid  -> Nothing
     newState -> Just newState
 
-runFrom :: State -> [Event] -> Maybe State
-runFrom state = foldM (curry $ fsm transition) state
+-- Gets a transition function, an initial state and a list of events
+-- and potentially produces an end state
+run :: ((State, Event) -> State) -> State -> [Event] -> Maybe State
+run t s = foldM (curry $ fsm t) s

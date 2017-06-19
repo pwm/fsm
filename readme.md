@@ -3,9 +3,9 @@
 ## To run
 
     $ stack ghci
-    > runFrom Asleep [Alarm, Eat, Dress, GoToWork, Think, Think, Yawn, Coffee, Think, Yawn]
+    > run myDay Asleep [Alarm, Eat, Dress, GoToWork, Think, Think, Yawn, Coffee, Think, Yawn]
     Just Cafe
-    > runFrom Work [WatchTV]
+    > run myDay Work [WatchTV]
     Nothing
 
 ## The machine
