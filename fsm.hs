@@ -31,5 +31,4 @@ fsm t (s, e) = t (s, e)
 
 -- Running the simulation with a transition function, an initial state and a list of events
 run :: ((State, Event) -> Maybe State) -> State -> [Event] -> Maybe State
---run t s = foldl (curry $ fsm t) s
 run t s = foldM (curry $ fsm t) s
