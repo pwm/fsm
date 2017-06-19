@@ -3,5 +3,5 @@
 ## To run
 
 $ stack ghci
-> run [Alarm, Eat, Dress, GoToWork, Think, Think, Yawn, Coffee, Think, Yawn, Coffee, GoHome, Read]
+$ run [Alarm, Eat, Dress, GoToWork, Think, Think, Yawn, Coffee, Think, Yawn, Coffee, GoHome, Read]
 
