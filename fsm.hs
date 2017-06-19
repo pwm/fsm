@@ -31,7 +31,6 @@ fsm t = \(s, e) -> case t (s, e) of
     Invalid  -> Nothing
     newState -> Just newState
 
--- Gets a transition function, an initial state and a list of events
--- and potentially produces an end state
+-- Running the simulation with a transition function, an initial state and a list of events
 run :: ((State, Event) -> State) -> State -> [Event] -> Maybe State
 run t s = foldM (curry $ fsm t) s
